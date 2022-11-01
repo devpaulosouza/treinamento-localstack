@@ -1,0 +1,15 @@
+server.port: 8090
+
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY:MY_ACCESS_KEY}
+      secretKey: ${AWS_SECRET_KEY:MY_SECRET}
+    region:
+      static: ${AWS_REGION:us-east-1}
+    stack:
+      auto: false
+    endpoint:
+      uri: http://localhost:4566
+    sns:
+      topic-arn: arn:aws:sns:us-east-1:000000000000:products

@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  aws:
+    image: 'localstack/localstack'
+    container_name: 'localstack-treinamento'
+    environment:
+      - SERVICES=sqs,sns
+      - AWS_DEFAULT_REGION=us-east-1
+      - DATA_DIR=/tmp/localstack/data
+      - AWS_ACCESS_KEY_ID=MY_ACCESS_KEY
+      - AWS_SECRET_ACCESS_KEY=MY_SECRET
+    ports:
+      - '4566:4566'
+    volumes:
+      - ./aws:/docker-entrypoint-initaws.d:ro
