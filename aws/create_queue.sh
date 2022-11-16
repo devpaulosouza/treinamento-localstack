@@ -9,7 +9,7 @@ SUBSCRIPTION_ARN=$(aws --endpoint-url $SQS_ENDPOINT sns subscribe \
    --topic-arn arn:aws:sns:us-east-1:000000000000:products\
    --protocol sqs \
    --attributes=RawMessageDelivery=true \
-   --notification-endpoint http://localstack:4566/000000000000/b2c-products\
+   --notification-endpoint http://localhost:4566/000000000000/b2c-products\
    | grep -o -P '(?<="SubscriptionArn": ").*(?=")')
 
 aws --endpoint-url $SQS_ENDPOINT sns set-subscription-attributes \
@@ -24,10 +24,13 @@ SUBSCRIPTION_ARN=$(aws --endpoint-url $SQS_ENDPOINT sns subscribe \
    --topic-arn arn:aws:sns:us-east-1:000000000000:products\
    --protocol sqs \
    --attributes=RawMessageDelivery=true \
-   --notification-endpoint http://localstack:4566/000000000000/b2b-products\
+   --notification-endpoint http://localhost:4566/000000000000/b2b-products\
    | grep -o -P '(?<="SubscriptionArn": ").*(?=")')
 aws --endpoint-url $SQS_ENDPOINT sns set-subscription-attributes \
    --subscription-arn $SUBSCRIPTION_ARN \
    --attribute-name FilterPolicy \
    --attribute-value '{ "filter": [ "B2B", "ALL" ] }'
 
+---------
+aws sqs receive-message --queue-url http://localstack:4566/000000000000/b2c-products
+aws sqs send-message --queue-url http://localstack:4566/000000000000/b2c-products --message-body "hi"
